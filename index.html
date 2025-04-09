@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Love Letter Effect by hamimbo</title>
+    <meta name="title" content="love letter effect | hamimbo"/>
+    <meta name="description" content="A love letter effect made by hamimbo"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.2/markdown-it.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        #message-container {
+            background-color: oklch(78.33% 0.108 326.54);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.455);
+            transition: transform 1s ease, opacity 1s ease;
+            transform-origin: top center;
+        }
+
+        .fold-in {
+            animation: foldIn 1s forwards;
+        }
+
+        .fold-out {
+            animation: foldOut 1s forwards;
+        }
+
+        @keyframes foldIn {
+            0% {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes foldOut {
+            0% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+        }
+
+        .page-flip {
+            animation: flipPage 0.6s ease-in-out;
+        }
+
+        @keyframes flipPage {
+            0% {
+                transform: rotateY(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: rotateY(90deg);
+                opacity: 0.2;
+            }
+            100% {
+                transform: rotateY(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* Envelope Wrapper with Perspective */
+        .envelope-wrapper {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            perspective: 1000px;
+            margin-bottom: 20px;
+        }
+
+        .envelope-box {
+            width: 100%;
+            height: 100%;
+            background-color: #d0f0ff;
+            border: 2px solid #88c9e9;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .envelope-flap {
+            width: 100%;
+            height: 100px;
+            background-color: #d0f0ff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            border-bottom: 2px solid #88c9e9;
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            transform-origin: top;
+            transition: transform 1s ease;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .flap-open {
+            transform: rotateX(180deg);
+        }
+
+        .heart-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            cursor: pointer;
+        }
+
+        .heart-container i {
+            font-size: 40px;
+            color: #e60000;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+
+    <script defer src="js/script.js"></script>
+</head>
+<body>
+    <div class="flex justify-center items-center flex-col w-screen h-screen">
+
+        <!-- Redesigned Envelope -->
+        <div id="envelope" class="envelope-wrapper cursor-pointer">
+            <div id="envelope-box" class="envelope-box">
+                <div id="flap" class="envelope-flap"></div>
+                <div class="heart-container">
+                    <i id="solid-heart" class="fa-solid fa-heart fa-2x"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Container -->
+        <div id="message-container" class="hidden flex-col items-center h-[400px] w-[500px] max-sm:w-[90vw] max-sm:h-[400px] p-5 overflow-y-auto rounded-lg">
+            <div class="w-full h-full overflow-y-auto">
+                <article id="message" class="prose"></article>
+            </div>
+            <button id="next-btn" class="mt-4 px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 hidden">
+                Next Page <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
